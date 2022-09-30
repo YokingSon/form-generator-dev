@@ -139,7 +139,7 @@ function mixinMethod(type) {
     if (confGlobal.fields[i].copy) {
       list.push(`handleCopy(componentName){
         this.${confGlobal.formModel}[componentName].push(JSON.parse(JSON.stringify(this.${confGlobal.formModel}[componentName][0])))
-      }`)
+      },`)
       break
     }
   }

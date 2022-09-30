@@ -91,8 +91,8 @@ const layouts = {
       label = ''
     }
     const required = !ruleTrigger[config.tag] && config.required ? 'required' : ''
-    const tagDom = tags[config.tag] ? tags[config.tag](scheme, row.copy) : null
-    const prop = row.copy ? `:prop="'${row.__config__.componentName}.'+i+'.${scheme.__vModel__}'" :rules="rules.${scheme.__vModel__}"` : `prop="${scheme.__vModel__}"`
+    const tagDom = tags[config.tag] ? tags[config.tag](scheme, row ? row.copy : null) : null
+    const prop = row && row.copy ? `:prop="'${row.__config__.componentName}.'+i+'.${scheme.__vModel__}'" :rules="rules.${scheme.__vModel__}"` : `prop="${scheme.__vModel__}"`
     let str = `<el-form-item ${labelWidth} ${label} ${prop} ${required}>
         ${tagDom}
       </el-form-item>`
