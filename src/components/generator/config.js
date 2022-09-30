@@ -520,6 +520,7 @@ export const layoutComponents = [
       document: 'https://element.eleme.cn/#/zh-CN/component/layout#row-attributes'
     },
     type: 'default',
+    copy: false,
     justify: 'start',
     align: 'top'
   },

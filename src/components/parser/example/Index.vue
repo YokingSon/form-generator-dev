@@ -133,6 +133,7 @@ export default {
               gutter: 15
             },
             type: 'default',
+            copy: false,
             justify: 'start',
             align: 'top'
           },

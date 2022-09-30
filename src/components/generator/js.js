@@ -51,6 +51,7 @@ export function makeUpJs(formConfig, type) {
 function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, propsList, uploadVarList, created) {
   const config = scheme.__config__
   const slot = scheme.__slot__
+  // 当row为可复制时，其内部不再单独构建数据
   buildData(scheme, dataList)
   buildRules(scheme, ruleList)
 
@@ -83,7 +84,6 @@ function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, pr
       methodList.push(buildSubmitUpload(scheme))
     }
   }
-
   // 构建子级组件属性
   if (config.children) {
     config.children.forEach(item => {
@@ -135,6 +135,14 @@ function mixinMethod(type) {
       list.push(methods[key])
     })
   }
+  for (let i = 0; i < confGlobal.fields.length; i++) {
+    if (confGlobal.fields[i].copy) {
+      list.push(`handleCopy(componentName){
+        this.${confGlobal.formModel}[componentName].push(JSON.parse(JSON.stringify(this.${confGlobal.formModel}[componentName][0])))
+      }`)
+      break
+    }
+  }
 
   return list
 }
@@ -142,9 +150,26 @@ function mixinMethod(type) {
 // 构建data
 function buildData(scheme, dataList) {
   const config = scheme.__config__
-  if (scheme.__vModel__ === undefined) return
+  // 非可复制的row，跳出函数
+  if (scheme.__vModel__ === undefined && !scheme.copy) return
+  /* eslint-disable */
+  for (let item of dataList) {
+    if (item.indexOf(scheme.__vModel__) !== -1) {
+      return
+    }
+  }
   const defaultValue = JSON.stringify(config.defaultValue)
-  dataList.push(`${scheme.__vModel__}: ${defaultValue},`)
+  if (scheme.copy) {
+    /* eslint-disable */
+    let temp = []
+    config.children.forEach(item => {
+      temp.push(`${item.__vModel__}: ${JSON.stringify(item.__config__.defaultValue)},`)
+    })
+    dataList.push(`${config.componentName}:[{${temp.join('\n')}}],`)
+  } else {
+    dataList.push(`${scheme.__vModel__}: ${defaultValue},`)
+  }
+  console.log(dataList)
 }
 
 // 构建校验规则

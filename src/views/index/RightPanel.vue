@@ -61,6 +61,12 @@
               <el-radio-button label="flex" />
             </el-radio-group>
           </el-form-item>
+          <el-form-item v-if="activeData.__config__.layout==='rowFormItem'&&activeData.copy!==undefined" label="可复制">
+            <el-radio-group v-model="activeData.copy">
+              <el-radio-button :label="true">是</el-radio-button>
+              <el-radio-button :label="false">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
           <el-form-item v-if="activeData.justify!==undefined&&activeData.type==='flex'" label="水平排列">
             <el-select v-model="activeData.justify" placeholder="请选择水平排列" :style="{width: '100%'}">
               <el-option
