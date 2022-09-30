@@ -20,7 +20,7 @@ jobs:
         npm run build
 
     - name: 发布
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: YokingSon/github-pages-deploy-action@releases/v3
       with:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages
