@@ -163,11 +163,11 @@ function buildData(scheme, dataList) {
     /* eslint-disable */
     let temp = []
     config.children.forEach(item => {
-      temp.push(`${item.__vModel__}: ${JSON.stringify(item.__config__.defaultValue)},`)
+      temp.push(`${item.__vModel__}: ${JSON.stringify(item.__config__.defaultValue || [])},`)
     })
     dataList.push(`${config.componentName}:[{${temp.join('\n')}}],`)
   } else {
-    dataList.push(`${scheme.__vModel__}: ${defaultValue},`)
+    dataList.push(`${scheme.__vModel__}: ${defaultValue || null},`)
   }
   console.log(dataList)
 }
